@@ -15,6 +15,8 @@ class HomeViewController: UIViewController, Bindable {
     navigationItem.title = "Home view controller"
     view.backgroundColor = .red
 
+    tableView.register(GalleryTableViewCell.self, forCellReuseIdentifier: GalleryTableViewCell.identifier)
+
     tableView.delegate = self
     tableView.dataSource = self
   }
@@ -37,8 +39,6 @@ class HomeViewController: UIViewController, Bindable {
     stack.translatesAutoresizingMaskIntoConstraints = false
 
     let wrapper = UIView()
-    wrapper.backgroundColor = .green
-
     wrapper.addSubview(stack)
 
     NSLayoutConstraint.activate([
@@ -71,8 +71,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     let cellType = viewModel.cellTypes[indexPath.section]
     switch cellType {
     case .large:
-      let cell = UITableViewCell(style: .default, reuseIdentifier: "")
-      cell.textLabel?.text = "large"
+      guard var cell = tableView.dequeueReusableCell(withIdentifier: GalleryTableViewCell.identifier, for: indexPath) as? GalleryTableViewCell
+        else { fatalError() }
+      cell.setViewModel(to: GalleryTableViewModel())
       return cell
     case .medium:
       let cell = UITableViewCell(style: .default, reuseIdentifier: "")
