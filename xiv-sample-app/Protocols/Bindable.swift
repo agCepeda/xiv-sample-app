@@ -18,3 +18,27 @@ extension Bindable where Self: UIViewController {
     bindViewModel()
   }
 }
+
+extension Bindable where Self: UITableViewCell {
+   mutating func setViewModel(to model: Self.ViewModel) {
+    viewModel = model
+    bindViewModel()
+    setNeedsLayout()
+  }
+}
+
+extension Bindable where Self: UICollectionViewCell {
+  mutating func setViewModel(to model: Self.ViewModel) {
+    viewModel = model
+    bindViewModel()
+    setNeedsLayout()
+  }
+}
+
+extension Bindable where Self: UIView {
+  mutating func setViewModel(to model: Self.ViewModel) {
+    viewModel = model
+    bindViewModel()
+    setNeedsLayout()
+  }
+}
